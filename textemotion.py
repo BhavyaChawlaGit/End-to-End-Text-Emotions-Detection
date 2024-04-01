@@ -6,6 +6,13 @@ from sklearn.svm import SVC
 from sklearn.svm import LinearSVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
+from sklearn.feature_extraction import DictVectorizer
+import seaborn as sns
+import pandas as pd
+import plotly.figure_factory as ff
+import matplotlib.pyplot as plt
 
 def read_data(file):
     data = []
@@ -21,7 +28,7 @@ file = 'text.txt'
 data = read_data(file)
 print("Number of instances: {}".format(len(data)))
 
-#I tired to create two functions for tokenization and generating the features of an input sentence
+# #I tired to create two functions for tokenization and generating the features of an input sentence
 
 def ngram(token, n): 
     output = []
@@ -41,7 +48,7 @@ def create_feature(text, nrange=(1, 1)):
     return Counter(text_features)
 
 
-#function to store the labels, our labels will be based on emotions such as Joy, Fear, Anger, and so on:
+# #function to store the labels, our labels will be based on emotions such as Joy, Fear, Anger, and so on:
 
 def convert_label(item, name): 
     items = list(map(float, item.split()))
@@ -93,9 +100,8 @@ for clf in clifs:
     train_acc, test_acc = train_test(clf, X_train, X_test, y_train, y_test)
     print("| {:25} | {:17.7f} | {:13.7f} |".format(clf_name, train_acc, test_acc))
 
-
-#for detecting the emotions in the text, I will use the LinearSVC model as it has the highest test accuracy.
 #Detecting Emotion
+
 l = ["joy", 'fear', "anger", "sadness", "disgust", "shame", "guilt"]
 l.sort()
 label_freq = {}
@@ -120,3 +126,25 @@ for text in texts:
     features = vectorizer.transform(features)
     prediction = clf.predict(features)[0]
     print( text,emoji_dict[prediction])
+
+
+
+#plotting the confusion matrix
+  
+def plot_confusion_matrix(clfs, X_train, X_test, y_train, y_test, emotions):
+    fig, axs = plt.subplots(2, 2, figsize=(15, 15))
+    for ax, clf in zip(axs.flatten(), clfs):
+        clf.fit(X_train, y_train)
+        y_pred = clf.predict(X_test)
+        cm = confusion_matrix(y_test, y_pred, labels=emotions)
+        df_cm = pd.DataFrame(cm, index=emotions, columns=emotions)
+        sns.heatmap(df_cm, annot=True, fmt='d', ax=ax)
+        ax.set_title(clf.__class__.__name__)
+        ax.set_xlabel('Predicted')
+        ax.set_ylabel('True')
+    plt.tight_layout()
+    plt.show()
+
+plot_confusion_matrix(clifs, X_train, X_test, y_train, y_test, emotions)
+
+
