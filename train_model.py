@@ -127,3 +127,4 @@ for text in texts:
     features = vectorizer.transform(features)
     prediction = lsvc.predict(features)[0]
     st.write(emoji_dict[prediction])
+
