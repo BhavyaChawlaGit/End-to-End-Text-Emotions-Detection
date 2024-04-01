@@ -85,9 +85,9 @@ X_test = vectorizer.transform(X_test)
 
 
 #I have used 4 models to begin with and will compare their performance using the accuracy score and then choose the best model for further tuning:
-svc = SVC()
-lsvc = LinearSVC(random_state=123)
-rforest = RandomForestClassifier(random_state=123)
+svc = SVC(C=0.01)
+lsvc = LinearSVC(C=0.01, random_state=123)
+rforest = RandomForestClassifier(n_estimators=10, random_state=123)
 dtree = DecisionTreeClassifier()
 
 clifs = [svc, lsvc, rforest, dtree]
@@ -95,10 +95,25 @@ clifs = [svc, lsvc, rforest, dtree]
 # train and test them 
 print("| {:25} | {} | {} |".format("Classifier", "Training Accuracy", "Test Accuracy"))
 print("| {} | {} | {} |".format("-"*25, "-"*17, "-"*13))
+# for clf in clifs: 
+#     clf_name = clf.__class__.__name__
+#     train_acc, test_acc = train_test(clf, X_train, X_test, y_train, y_test)
+#     print("| {:25} | {:17.7f} | {:13.7f} |".format(clf_name, train_acc, test_acc))
+
+
+best_acc = 0
+best_clf = None
+
 for clf in clifs: 
     clf_name = clf.__class__.__name__
     train_acc, test_acc = train_test(clf, X_train, X_test, y_train, y_test)
     print("| {:25} | {:17.7f} | {:13.7f} |".format(clf_name, train_acc, test_acc))
+    if test_acc > best_acc:
+        best_acc = test_acc
+        best_clf = clf
+
+# Now best_clf is the classifier with the highest test accuracy
+print("Best classifier: ", best_clf.__class__.__name__)
 
 #Detecting Emotion
 
@@ -124,7 +139,7 @@ texts = [t1, t2, t3, t4]
 for text in texts: 
     features = create_feature(text, nrange=(1, 4))
     features = vectorizer.transform(features)
-    prediction = clf.predict(features)[0]
+    prediction = best_clf.predict(features)[0] #changed clf to best_clf
     print( text,emoji_dict[prediction])
 
 
