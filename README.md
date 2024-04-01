@@ -64,7 +64,7 @@ models = [svc, lsvc, rforest, dtree]
 for model in models:
     train_acc, test_acc = train_test(model, X_train, X_test, y_train, y_test)
     print(f"Model: {model.__class__.__name__}, Training Accuracy: {train_acc}, Test Accuracy: {test_acc}")
-'''
+```
 
 ---
 
