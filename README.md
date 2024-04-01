@@ -56,8 +56,10 @@ The [textemotion.py](https://github.com/BhavyaChawlaGit/End-to-End-Text-Emotions
 
 It trains each model on the training data and calculates the training and test accuracies.  
 The script then selects the model with the highest test accuracy for further tuning. In this case, the LinearSVC model was selected because it had the highest test accuracy.  
+
 Here's the code that trains the models and calculates their accuracies:  
-'''
+
+```
 models = [svc, lsvc, rforest, dtree]
 for model in models:
     train_acc, test_acc = train_test(model, X_train, X_test, y_train, y_test)
