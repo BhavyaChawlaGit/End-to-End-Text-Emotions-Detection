@@ -96,6 +96,22 @@ This script reads data from text.txt, compares the performance of four different
 
 ---
 
+## Scope for Improvement
+While the current implementation of the text emotion prediction model provides a good starting point, there are several areas where the model and results needs to be improved  
+The current model appears to be overfitting, as it performs well on the training data but poorly on the test data.  
+
+```
+| Classifier                | Training Accuracy | Test Accuracy |
+| ------------------------- | ----------------- | ------------- |
+| SVC                       |         0.1458890 |     0.1410428 |
+| LinearSVC                 |         0.9923128 |     0.5802139 |
+| RandomForestClassifier    |         0.9911430 |     0.4304813 |
+| DecisionTreeClassifier    |         0.9988302 |     0.4632353 |
+```
+
+**Best classifier:  LinearSVC**
+
+---
 
 
 
