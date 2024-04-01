@@ -27,25 +27,25 @@ You can interact with the application in your browser. Any changes you make to t
 ## Model Training
 The model is trained using the train_test function, which trains the model and returns the training and test accuracies.  
 
-````
+
 ```
 # Train the model
 train_acc, test_acc = train_test(lsvc, X_train, X_test, y_train, y_test)
 print("Training Accuracy: ", train_acc)
 print("Test Accuracy: ", test_acc)
 ```
-````
+
 
 ### Label Frequencies
 
 The script also prints the frequencies of each label in the data:  
 
-````
+
 ```
 for l in sorted(label_freq, key=label_freq.get, reverse=True):
     print("{:10}({})  {}".format(convert_label(l, emotions), l, label_freq[l]))
 ```
-````
+
 
 
 
