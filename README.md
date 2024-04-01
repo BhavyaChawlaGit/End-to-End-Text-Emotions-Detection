@@ -46,6 +46,27 @@ for l in sorted(label_freq, key=label_freq.get, reverse=True):
     print("{:10}({})  {}".format(convert_label(l, emotions), l, label_freq[l]))
 ```
 
+## Model Selection
+
+The [textemotion.py](https://github.com/BhavyaChawlaGit/End-to-End-Text-Emotions-Detection/blob/f0a53d49c26640b973944a84297afebac597a68d/textemotion.py) script compares the performance of four different models: 
+- SVC
+- LinearSVC
+- RandomForestClassifier
+- DecisionTreeClassifier
+
+It trains each model on the training data and calculates the training and test accuracies.  
+The script then selects the model with the highest test accuracy for further tuning. In this case, the LinearSVC model was selected because it had the highest test accuracy.  
+Here's the code that trains the models and calculates their accuracies:  
+'''
+models = [svc, lsvc, rforest, dtree]
+for model in models:
+    train_acc, test_acc = train_test(model, X_train, X_test, y_train, y_test)
+    print(f"Model: {model.__class__.__name__}, Training Accuracy: {train_acc}, Test Accuracy: {test_acc}")
+'''
+
+---
+
+
 
 
 
