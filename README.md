@@ -1,6 +1,26 @@
 # Text Emotion Detection (End to End)
 This project uses a LinearSVC model to predict the emotion of a given text.  
 
+## Dataset
+The dataset used for this project is a text file named text.txt, which can be found [here](https://github.com/amankharwal/Website-data/blob/master/text.txt).  
+**Number of instances: 7480**  
+The file contains labeled text data, where each line consists of a label and a text string.   
+The labels represent different emotions, and the text strings are sentences or phrases that express these emotions.  
+
+The data is preprocessed by converting the labels to integers and creating feature vectors for the text strings.   
+The feature vectors are created using the create_feature function, which extracts n-grams from the text strings.  
+
+Here's a snippet of the code that preprocesses the data:  
+```
+X_all = []
+y_all = []
+for label, text in data:
+    y_all.append(convert_label(label, emotions))
+    X_all.append(create_feature(text, nrange=(1, 4)))
+```
+
+
+
 ## Requirements
 - Python 3.7 or higher
 - Libraries: sklearn, pickle, streamlit
@@ -65,6 +85,14 @@ for model in models:
     train_acc, test_acc = train_test(model, X_train, X_test, y_train, y_test)
     print(f"Model: {model.__class__.__name__}, Training Accuracy: {train_acc}, Test Accuracy: {test_acc}")
 ```
+
+
+## Running textemotion.py
+To run textemotion.py, navigate to the project directory in your terminal and run the following command:  
+```
+python textemotion.py
+```
+This script reads data from text.txt, compares the performance of four different models, and prints the number of instances in the data.  
 
 ---
 
